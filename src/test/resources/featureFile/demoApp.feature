@@ -14,7 +14,7 @@ Feature: Android , IOS and WebAppApp Testing
              And I click on "Preference" Link after opening demo application
              And I click on "3. Preference dependencies" Link after opening demo application
              Then I validate the "WiFi settings" should present on the page
-             Given I perform the get operation
+             Given I provide ContentType.JSON for the next task
              Then I validate the json response at index "2" with the native android app
 
 

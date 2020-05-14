@@ -68,19 +68,12 @@ public class MyStepdefs extends Browsers {
     }
     @And("^I initializes the chrome$")
     public void iInitializesTheChrome() throws InterruptedException, MalformedURLException {
-/*        System.out.println("In webApp background");
-        service= ApiumServer.startServer();
-        Thread.sleep(4000);
-        chromedriver=capabilities();*/
         chromedriver=capabilities();
         chromePage=new WebAppPage(chromedriver);
-
     }
 
     @And("^I open the Webpage \"([^\"]*)\"$")
     public void iOpenTheWebpage(String url) throws Throwable {
-        //chromedriver.get(url);
-        //Thread.sleep(2000);
         chromePage.getURL(url);
     }
 
@@ -135,17 +128,14 @@ public class MyStepdefs extends Browsers {
     }
     //=============================Apis step definition================//
 
-    @Given("^I perform the get operation$")
-    public void iPerformTheGetOperation() {
+    @Given("^I provide ContentType\\.JSON for the next task$")
+    public void iProvideContentTypeJSONForTheNextTask() {
         AndriodAppPage.contentType();
     }
-
-
     @Then("^I validate the json response at index \"([^\"]*)\" with the native android app$")
     public void iValidateTheJsonResponseAtIndexWithTheNativeAndroidApp(String postNumber) throws Throwable {
         AndriodAppPage.validateResponseWithNativeApp(postNumber);
     }
-
     @And("^I quit the IOS driver$")
     public void iQuitTheIOSDriver() {
         iospage.quitIosDriver();
@@ -166,7 +156,6 @@ public class MyStepdefs extends Browsers {
         }
 
     }
-
 
 }
 

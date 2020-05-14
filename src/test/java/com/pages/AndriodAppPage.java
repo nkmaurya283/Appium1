@@ -38,8 +38,8 @@ public class AndriodAppPage {
         Thread.sleep(2000);
         String wifiText=driver.findElementByXPath(partialXpathPart1+textToValidate+partialXpathPart2).getText();
         wifi=wifiText;
-        System.out.println("text On the page is  :-  "+textToValidate);
-        System.out.println("Text on Wifi Setting"+wifiText);
+        //System.out.println("text On the page is  :-  "+textToValidate);
+        //System.out.println("Text on Wifi Setting"+wifiText);
         Assert.assertEquals(textToValidate,wifiText);
         Thread.sleep(2000);
     }
@@ -73,8 +73,8 @@ public class AndriodAppPage {
         Response response=when().get(String.format("https://reqres.in/api/users/%s",postNumber)).
                 then().contentType(ContentType.JSON).extract().response();
         String usernames = response.jsonPath().getString("data.first_name");
-        System.out.println("name is  "+usernames);
-        System.out.println("From response body Wifi text:-"+wifi);
+        System.out.println("Response after hitting the APIs is:-  "+usernames);
+        System.out.println("Text taken from Native App is:- "+wifi);
         Assert.assertEquals(wifi,usernames);
     }
 
