@@ -1,11 +1,9 @@
 package com.pages;
 
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.pagefactory.iOSFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.junit.Assert;
 import org.openqa.selenium.support.PageFactory;
@@ -44,6 +42,5 @@ public class IosAppPage {
     }
     public void quitIosDriver(){
        driver.quit();
-
     }
 }

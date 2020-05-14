@@ -4,6 +4,7 @@ import com.utility.ApiumServer;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -39,7 +40,9 @@ public class Browsers {
         capabilities.setCapability("noReset", true);
         capabilities.setCapability("noRest", true);
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel3a");
-        capabilities.setCapability(MobileCapabilityType.APP, "C:\\Users\\Navneet\\Desktop\\Appium\\Andriod\\apk\\ApiDemos-debug.apk");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,"io.appium.android.apis");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,"io.appium.android.apis.ApiDemos");
+        //capabilities.setCapability(MobileCapabilityType.APP, "C:\\Users\\Navneet\\Desktop\\Appium\\Andriod\\apk\\ApiDemos-debug.apk");
         appDriver=new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         Thread.sleep(1000);
         return appDriver;

@@ -14,23 +14,13 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.junit.Assert;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import static org.hamcrest.Matchers.*;
-
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 
 public class MyStepdefs extends Browsers {
 
@@ -46,8 +36,6 @@ public class MyStepdefs extends Browsers {
 
     public MyStepdefs()  {
     }
-
-
 
     @Given("^I initialize the android driver$")
     public void iInitializeTheAndroidDriver() throws MalformedURLException, InterruptedException {
@@ -139,41 +127,32 @@ public class MyStepdefs extends Browsers {
 
     @And("^I click on \"([^\"]*)\" on the page after opening the application$")
     public void iClickOnOnThePageAfterOpeningTheApplication(String arg0) throws Throwable {
-/*        IOSElement textButton = (IOSElement) new WebDriverWait(iosDriver, 30)
-                .until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId(arg0)));
-        textButton.click();*/
          iospage.clickOnButton(arg0);
     }
     @And("^I have pass the value \"([^\"]*)\" in the textbox$")
     public void iHavePassTheValueInTheTextbox(String keysToSend) throws Throwable {
-/*        IOSElement textInput = (IOSElement) new WebDriverWait(iosDriver, 30)
-                .until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("Text Input")));
-        textInput.sendKeys(keysToSend);
-        String actual=textInput.getText();
-        System.out.println("Actual one is"+actual);
-        Assert.assertEquals(keysToSend,actual);*/
         iospage.passTheValueInTextBox(keysToSend);
     }
-    //=============================Apis step definitaion=======
+    //=============================Apis step definition================//
 
     @Given("^I perform the get operation$")
     public void iPerformTheGetOperation() {
-        given().contentType(ContentType.JSON);
+        AndriodAppPage.contentType();
     }
 
 
-    @Then("^I should validate the respone \"([^\"]*)\"$")
-    public void iShouldValidateTheRespone(String postNumber) throws Throwable {
-       Response response=when().get(String.format("https://reqres.in/api/users/%s",postNumber)).
-               then().contentType(ContentType.JSON).extract().response();
-        String usernames = response.jsonPath().getString("data.first_name");
-        System.out.println("name is  "+usernames);
+    @Then("^I validate the json response at index \"([^\"]*)\" with the native android app$")
+    public void iValidateTheJsonResponseAtIndexWithTheNativeAndroidApp(String postNumber) throws Throwable {
+        AndriodAppPage.validateResponseWithNativeApp(postNumber);
     }
 
     @And("^I quit the IOS driver$")
     public void iQuitTheIOSDriver() {
         iospage.quitIosDriver();
     }
+
+
+
     @After
     public void closeDriver() throws IOException, InterruptedException {
         if(driver1!=null) {
@@ -187,6 +166,7 @@ public class MyStepdefs extends Browsers {
         }
 
     }
+
 
 }
 
