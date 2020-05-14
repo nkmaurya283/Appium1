@@ -15,7 +15,7 @@ Feature: Android , IOS and WebAppApp Testing
              And I click on "3. Preference dependencies" Link after opening demo application
              Then I validate the "WiFi settings" should present on the page
              Given I perform the get operation
-             Then I should validate the respone "2"
+             Then I validate the json response at index "2" with the native android app
 
 
           Scenario:BrowserStack IOS application on Iphone 11 Pro
