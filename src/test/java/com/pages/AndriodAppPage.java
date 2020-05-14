@@ -1,10 +1,13 @@
 package com.pages;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.restassured.http.ContentType;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import static io.restassured.RestAssured.*;
+
 
 
 public class AndriodAppPage {
@@ -56,5 +59,12 @@ public class AndriodAppPage {
         System.out.println("Actual in app is"+actual);
         Assert.assertEquals(textToSend,actual);
     }
+
+
+    //===============Apis=======================
+/*    public void performGetOperation(String endPoint){
+     given().contentType(ContentType.JSON);
+     when().get(endPoint);
+    }*/
 
 }

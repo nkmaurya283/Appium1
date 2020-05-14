@@ -2,6 +2,8 @@ package com.stepdefination;
 
 import com.browsers.Browsers;
 import com.pages.AndriodAppPage;
+import com.pages.IosAppPage;
+import com.pages.WebAppPage;
 import com.utility.ApiumServer;
 import cucumber.api.PendingException;
 import cucumber.api.java.After;
@@ -15,6 +17,8 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
@@ -23,7 +27,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
+import static org.hamcrest.Matchers.*;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 
 public class MyStepdefs extends Browsers {
 
@@ -33,6 +40,8 @@ public class MyStepdefs extends Browsers {
     IOSDriver iosDriver;
     Browsers browsers;
     AndriodAppPage page;
+    IosAppPage iospage;
+    WebAppPage chromePage;
     AndroidDriver driver1;
 
     public MyStepdefs()  {
@@ -71,25 +80,29 @@ public class MyStepdefs extends Browsers {
     }
     @And("^I initializes the chrome$")
     public void iInitializesTheChrome() throws InterruptedException, MalformedURLException {
-        System.out.println("In webApp background");
+/*        System.out.println("In webApp background");
         service= ApiumServer.startServer();
         Thread.sleep(4000);
+        chromedriver=capabilities();*/
         chromedriver=capabilities();
+        chromePage=new WebAppPage(chromedriver);
 
     }
 
     @And("^I open the Webpage \"([^\"]*)\"$")
     public void iOpenTheWebpage(String url) throws Throwable {
-        chromedriver.get(url);
-        Thread.sleep(2000);
+        //chromedriver.get(url);
+        //Thread.sleep(2000);
+        chromePage.getURL(url);
     }
 
     @And("^I search \"([^\"]*)\" in search bar on the page$")
     public void iSearchInSearchBarOnThePage(String arg0) throws Throwable {
-        Thread.sleep(3000);
+/*        Thread.sleep(3000);
         AndroidElement ele= (AndroidElement) chromedriver.findElementByXPath("//input[@name='q']");
         ele.sendKeys(arg0);
-        Thread.sleep(3000);
+        Thread.sleep(3000);*/
+        chromePage.keysToSearch(arg0);
 
     }
 
@@ -120,41 +133,46 @@ public class MyStepdefs extends Browsers {
     @Given("^I initializes the IOS driver and there desired capabilities$")
     public void iInitializesTheIOSDriverAndThereDesiredCapabilities() throws MalformedURLException, InterruptedException {
         this.iosDriver= IOScapabilities();
+        iospage=new IosAppPage(iosDriver);
+
     }
 
     @And("^I click on \"([^\"]*)\" on the page after opening the application$")
     public void iClickOnOnThePageAfterOpeningTheApplication(String arg0) throws Throwable {
-        IOSElement textButton = (IOSElement) new WebDriverWait(iosDriver, 30)
+/*        IOSElement textButton = (IOSElement) new WebDriverWait(iosDriver, 30)
                 .until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId(arg0)));
-        textButton.click();
+        textButton.click();*/
+         iospage.clickOnButton(arg0);
     }
     @And("^I have pass the value \"([^\"]*)\" in the textbox$")
     public void iHavePassTheValueInTheTextbox(String keysToSend) throws Throwable {
-        IOSElement textInput = (IOSElement) new WebDriverWait(iosDriver, 30)
+/*        IOSElement textInput = (IOSElement) new WebDriverWait(iosDriver, 30)
                 .until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("Text Input")));
         textInput.sendKeys(keysToSend);
         String actual=textInput.getText();
         System.out.println("Actual one is"+actual);
-        Assert.assertEquals(keysToSend,actual);
+        Assert.assertEquals(keysToSend,actual);*/
+        iospage.passTheValueInTextBox(keysToSend);
+    }
+    //=============================Apis step definitaion=======
+
+    @Given("^I perform the get operation$")
+    public void iPerformTheGetOperation() {
+        given().contentType(ContentType.JSON);
     }
 
-    @And("^I  validate the \"([^\"]*)\" on the page$")
-    public void iValidateTheOnThePage(String arg0) throws Throwable {
-        IOSElement textOutput = (IOSElement) new WebDriverWait(iosDriver, 30)
-                .until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("Text Output")));
-        String actual=textOutput.getText();
-        System.out.println("Actual is"+actual);
-                Assert.assertEquals(arg0,actual);
 
-/*        if (textOutput != null && textOutput.getText().equals(arg0))
-            assert (true);
-        else
-            assert (false)*/;
+    @Then("^I should validate the respone \"([^\"]*)\"$")
+    public void iShouldValidateTheRespone(String postNumber) throws Throwable {
+       Response response=when().get(String.format("https://reqres.in/api/users/%s",postNumber)).
+               then().contentType(ContentType.JSON).extract().response();
+        String usernames = response.jsonPath().getString("data.first_name");
+        System.out.println("name is  "+usernames);
     }
 
     @And("^I quit the IOS driver$")
     public void iQuitTheIOSDriver() {
-        iosDriver.quit();
+        iospage.quitIosDriver();
     }
     @After
     public void closeDriver() throws IOException, InterruptedException {
@@ -169,7 +187,6 @@ public class MyStepdefs extends Browsers {
         }
 
     }
-
 
 }
 
