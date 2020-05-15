@@ -22,12 +22,12 @@ Feature: Android , IOS and WebAppApp Testing
              Given I initializes the IOS driver and there desired capabilities
              And I click on "Text Button" on the page after opening the application
              And I have pass the value "Testing the field" in the textbox
-             And I quit the IOS driver
+             Then I quit the IOS driver
 
-          Scenario: WebApp Chrome Testing Covid19 page
-             Given I initializes the chrome
-             And I open the Webpage "https://www.google.com/"
-             And I search "Covid19" in search bar on the page
-             And I clicked on search Button
-             Then I click on covid19 home page link
-             Then I validate The text "Ministry of Health[ ]and Family Welfare" on the page
+          #Scenario: WebApp Chrome Testing Covid19 page
+             #Given I initializes the chrome
+             #And I open the Webpage "https://www.google.com/"
+             #And I search "Covid19" in search bar on the page
+             #And I clicked on search Button
+             #Then I click on covid19 home page link
+             #Then I validate The text "Ministry of Health[ ]and Family Welfare" on the page"""

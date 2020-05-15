@@ -1,5 +1,6 @@
 package com.stepdefination;
 
+import com.apis.ApiUtility;
 import com.browsers.Browsers;
 import com.pages.AndriodAppPage;
 import com.pages.IosAppPage;
@@ -64,7 +65,8 @@ public class MyStepdefs extends Browsers {
 
     @Then("^I validate the \"([^\"]*)\" should present on the page$")
     public void iValidateTheShouldPresentOnThePage(String textOnPage) throws Throwable {
-        page.validateTextOnPage(textOnPage);
+        String actual=page.getValueFromApp(textOnPage);
+        Assert.assertEquals(textOnPage,actual);
     }
     @And("^I initializes the chrome$")
     public void iInitializesTheChrome() throws InterruptedException, MalformedURLException {
@@ -134,7 +136,8 @@ public class MyStepdefs extends Browsers {
     }
     @Then("^I validate the json response at index \"([^\"]*)\" with the native android app$")
     public void iValidateTheJsonResponseAtIndexWithTheNativeAndroidApp(String postNumber) throws Throwable {
-        AndriodAppPage.validateResponseWithNativeApp(postNumber);
+        String username= ApiUtility.getResponse(postNumber);
+        Assert.assertEquals(AndriodAppPage.getWifiText(),username);
     }
     @And("^I quit the IOS driver$")
     public void iQuitTheIOSDriver() {
@@ -149,11 +152,11 @@ public class MyStepdefs extends Browsers {
             driver1.quit();
         }if(chromedriver!=null){
             chromedriver.quit();
-        if (service != null) {
-                service.stop();
-                Thread.sleep(2000);
-            }
         }
+            ApiumServer.stopServer();
+                Thread.sleep(2000);
+
+
 
     }
 

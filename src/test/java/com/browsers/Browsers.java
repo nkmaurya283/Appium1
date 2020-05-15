@@ -1,5 +1,6 @@
 package com.browsers;
 
+import com.properties.ConfigReader;
 import com.utility.ApiumServer;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -11,10 +12,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 
 public class Browsers {
 
     DesiredCapabilities capabilities;
+    ConfigReader reader=null;
     //AppiumDriverLocalService service;
     AndroidDriver driver;
     AndroidDriver appDriver;
@@ -34,27 +37,29 @@ public class Browsers {
     public AndroidDriver initiliazes() throws InterruptedException, MalformedURLException {
         service= ApiumServer.startServer();
         Thread.sleep(4000);
+        reader=new ConfigReader();
         capabilities=new DesiredCapabilities();
         capabilities.setCapability("no",true);
         capabilities.setCapability("newCommandTimeout", 100000);
         capabilities.setCapability("noReset", true);
         capabilities.setCapability("noRest", true);
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel3a");
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,"io.appium.android.apis");
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,"io.appium.android.apis.ApiDemos");
-        //capabilities.setCapability(MobileCapabilityType.APP, "C:\\Users\\Navneet\\Desktop\\Appium\\Andriod\\apk\\ApiDemos-debug.apk");
-        appDriver=new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, reader.getPlatform());
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, reader.getDeviceName());
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,reader.getAppPackage());
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,reader.getAppActivity());
+        appDriver=new AndroidDriver(new URL(reader.getLocaHostPath()), capabilities);
         Thread.sleep(1000);
         return appDriver;
     }
     public  IOSDriver IOScapabilities() throws InterruptedException, MalformedURLException {
         capabilities=new DesiredCapabilities();
-        capabilities.setCapability("device", "iPhone 11 Pro");
-        capabilities.setCapability("os_version", "13");
-        capabilities.setCapability("project", "My First Project");
-        capabilities.setCapability("build", "My First Build");
-        capabilities.setCapability("name", "Bstack-[Java] Sample Test");
-        capabilities.setCapability("app", "bs://444bd0308813ae0dc236f8cd461c02d3afa7901d");
+        reader=new ConfigReader();
+        capabilities.setCapability("device", reader.getIosDevice());
+        capabilities.setCapability("os_version", reader.getIosVersion());
+        capabilities.setCapability("project", reader.getIosProject());
+        capabilities.setCapability("build", reader.getIosBuild());
+        capabilities.setCapability("name", reader.getIosTestName());
+        capabilities.setCapability("app", reader.getIosApp());
 
         IOSDriver<IOSElement> iosDriver = new IOSDriver<IOSElement>(
                 new URL("http://" + userName + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub"), capabilities);

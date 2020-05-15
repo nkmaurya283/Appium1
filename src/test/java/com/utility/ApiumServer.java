@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class ApiumServer {
+    //AppiumDriverLocalService service = null;
 
     public static boolean checkIfServerIsRunnning(int port) {
 
@@ -29,6 +30,17 @@ public class ApiumServer {
         if(!flag){
             service=AppiumDriverLocalService.buildDefaultService();
             service.start();
+        }
+
+
+        return service;
+    }
+    public static AppiumDriverLocalService stopServer(){
+        AppiumDriverLocalService service = null;
+        boolean flag=checkIfServerIsRunnning(4723);
+        if(flag){
+            service=AppiumDriverLocalService.buildDefaultService();
+            service.stop();
         }
 
 

@@ -34,14 +34,11 @@ public class AndriodAppPage {
         driver.findElementByXPath(partialXpathPart1+menuToClick+partialXpathPart2).click();
         Thread.sleep(2000);
     }
-    public void validateTextOnPage(String textToValidate) throws InterruptedException {
+    public String getValueFromApp(String textToValidate) throws InterruptedException {
         Thread.sleep(2000);
         String wifiText=driver.findElementByXPath(partialXpathPart1+textToValidate+partialXpathPart2).getText();
         wifi=wifiText;
-        //System.out.println("text On the page is  :-  "+textToValidate);
-        //System.out.println("Text on Wifi Setting"+wifiText);
-        Assert.assertEquals(textToValidate,wifiText);
-        Thread.sleep(2000);
+        return wifiText;
     }
     public void checkBoxCheckIfNotChecked()  {
         if(checkBox.getAttribute("checked").equals("true")){
@@ -66,16 +63,14 @@ public class AndriodAppPage {
 
     //===============Apis=======================
     public static void contentType(){
+
         given().contentType(ContentType.JSON);
     }
+
     static String wifi;
-    public static void validateResponseWithNativeApp(String postNumber){
-        Response response=when().get(String.format("https://reqres.in/api/users/%s",postNumber)).
-                then().contentType(ContentType.JSON).extract().response();
-        String usernames = response.jsonPath().getString("data.first_name");
-        System.out.println("Response after hitting the APIs is:-  "+usernames);
-        System.out.println("Text taken from Native App is:- "+wifi);
-        Assert.assertEquals(wifi,usernames);
+    public static String getWifiText(){
+        System.out.println("Wifi text is:-"+wifi);
+        return wifi;
     }
 
 }
