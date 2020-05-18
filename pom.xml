@@ -136,6 +136,7 @@
                     </argLine>
                     <properties>
                     </properties>
+                    <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
                 <dependencies>
                     <dependency>
