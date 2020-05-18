@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-public class Browsers {
+public class DriverFactory {
 
     DesiredCapabilities capabilities;
     ConfigReader reader=null;

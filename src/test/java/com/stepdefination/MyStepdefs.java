@@ -1,17 +1,16 @@
 package com.stepdefination;
 
 import com.apis.ApiUtility;
-import com.browsers.Browsers;
+import com.browsers.DriverFactory;
 import com.pages.AndriodAppPage;
 import com.pages.IosAppPage;
 import com.pages.WebAppPage;
+import com.utilities.Utility;
 import com.utility.ApiumServer;
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -23,13 +22,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-public class MyStepdefs extends Browsers {
+public class MyStepdefs extends DriverFactory {
 
     AndroidDriver driver;
     AndroidDriver chromedriver;
     AppiumDriverLocalService service;
     IOSDriver iosDriver;
-    Browsers browsers;
+    DriverFactory driverFactory;
     AndriodAppPage page;
     IosAppPage iospage;
     WebAppPage chromePage;
@@ -40,8 +39,8 @@ public class MyStepdefs extends Browsers {
 
     @Given("^I initialize the android driver$")
     public void iInitializeTheAndroidDriver() throws MalformedURLException, InterruptedException {
-        browsers=new Browsers();
-        driver1=browsers.initiliazes();
+        driverFactory =new DriverFactory();
+        driver1= driverFactory.initiliazes();
         page=new AndriodAppPage(driver1);
     }
 
@@ -148,15 +147,14 @@ public class MyStepdefs extends Browsers {
 
     @After
     public void closeDriver() throws IOException, InterruptedException {
+        Utility.screenshot(driver1);
         if(driver1!=null) {
             driver1.quit();
         }if(chromedriver!=null){
             chromedriver.quit();
         }
-            ApiumServer.stopServer();
-                Thread.sleep(2000);
-
-
+            //ApiumServer.stopServer();
+               // Thread.sleep(2000);
 
     }
 

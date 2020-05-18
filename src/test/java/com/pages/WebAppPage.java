@@ -1,18 +1,13 @@
 package com.pages;
 
-import com.browsers.Browsers;
-import com.utility.ApiumServer;
-import io.appium.java_client.MobileElement;
+import com.browsers.DriverFactory;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.net.MalformedURLException;
 
-public class WebAppPage extends Browsers {
+public class WebAppPage extends DriverFactory {
 
     @FindBy(xpath = "//input[@name='q']")
     public WebElement searchXpath;
