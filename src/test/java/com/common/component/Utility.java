@@ -1,4 +1,4 @@
-package com.utilities;
+package com.common.component;
 
 import com.google.common.io.Files;
 import io.appium.java_client.AppiumDriver;

@@ -10,6 +10,8 @@ public class ConfigReader {
 
     Properties properties;
     private final String propertyFilePath = "src/test/resources/configuration.properties";
+    //public String partialXpathPart3 = properties.getProperty("partialXpathPart1");
+    //public String partialXpathPart4 = properties.getProperty("partialXpathPart2");
 
     public ConfigReader() {
         BufferedReader reader;
@@ -82,5 +84,11 @@ public class ConfigReader {
         if(iosApp!= null) return iosApp;
         else throw new RuntimeException("LocalHost Path not specified in the Configuration.properties");
     }
+    public String getEnv(){
+        String app = properties.getProperty("ENV_LOCAL");
+        if(app!= null) return app;
+        else throw new RuntimeException("LocalHost Path not specified in the Configuration.properties");
+    }
+
 
 }
