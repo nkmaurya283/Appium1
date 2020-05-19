@@ -1,4 +1,4 @@
-package com.utility;
+package com.common.component;
 
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 

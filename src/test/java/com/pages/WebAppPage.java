@@ -19,12 +19,6 @@ public class WebAppPage extends DriverFactory {
         this.driver=driver;
     }
 
-/*    public void initiliazeChromeDriver() throws InterruptedException, MalformedURLException {
-        System.out.println("In webApp background");
-        service= ApiumServer.startServer();
-        Thread.sleep(4000);
-        //driver=capabilities();
-    }*/
     public void getURL(String url) throws InterruptedException, MalformedURLException {
         driver.get(url);
         Thread.sleep(2000);
