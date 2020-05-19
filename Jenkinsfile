@@ -20,7 +20,7 @@ pipeline{
         }
          stage("Stopping Allure Server"){
             steps{
-                bat label: '', script: 'Ctrl + C'
+               bat label: '', script: 'RootkitRemover.exe /C /noupdate'
             }
         }
     }
