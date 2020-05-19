@@ -2,7 +2,7 @@ pipeline{
     agent any
     
     stages{
-        stage("Git checkput"){
+        stage("Git checkout"){
             steps{
                 git credentialsId: 'be50f576-4fe3-4f65-930c-0598d637fb1f', url: 'https://github.com/nkmaurya283/Appium1.git'
             }
