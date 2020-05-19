@@ -18,6 +18,11 @@ pipeline{
                 bat label: '', script: 'allure serve target/allure-results'
             }
         }
+         stage("Stopping Allure Server"){
+            steps{
+                bat label: '', script: 'Ctrl + C'
+            }
+        }
     }
 }
     
